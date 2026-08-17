@@ -19,30 +19,37 @@ describe("ErrorTest.ping", () => {
 
     expect(await ErrorTest.ping()).toEqual({ ok: true });
   });
-});g
+});
 
 describe("ErrorTest throw methods", () => {
   it("surfaces a native-thrown error as a WefterBridgeError", async () => {
     installMockBridge({
       "error-test": (method) => {
-        if (method === "throwRuntime") throw new Error("java.lang.RuntimeException: boom");
+        if (method === "throwRuntime")
+          throw new Error("java.lang.RuntimeException: boom");
         throw new Error(`unexpected method ${method}`);
       },
     });
 
     const call = ErrorTest.throwRuntime();
     await expect(call).rejects.toBeInstanceOf(WefterBridgeError);
-    await expect(call).rejects.toMatchObject({ code: "MOCK_ERROR", message: "java.lang.RuntimeException: boom" });
+    await expect(call).rejects.toMatchObject({
+      code: "MOCK_ERROR",
+      message: "java.lang.RuntimeException: boom",
+    });
   });
 
   it("surfaces a deliberate reject() call the same way", async () => {
     installMockBridge({
       "error-test": (method) => {
-        if (method === "rejectWithCode") throw new Error("Deliberate reject() call");
+        if (method === "rejectWithCode")
+          throw new Error("Deliberate reject() call");
         throw new Error(`unexpected method ${method}`);
       },
     });
 
-    await expect(ErrorTest.rejectWithCode()).rejects.toMatchObject({ code: "MOCK_ERROR" });
+    await expect(ErrorTest.rejectWithCode()).rejects.toMatchObject({
+      code: "MOCK_ERROR",
+    });
   });
 });
