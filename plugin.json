@@ -1,0 +1,10 @@
+{
+  "name": "error-test",
+  "permissions": {
+    "android": [],
+    "ios": {}
+  },
+  "methods": ["ping", "throwRuntime", "throwNullPointer", "throwNested", "rejectWithCode"],
+  "hooks": [],
+  "events": []
+}
