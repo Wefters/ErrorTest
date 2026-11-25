@@ -4,7 +4,13 @@
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist", "plugin.json", "android", "ios", "README.md"],
+  "files": [
+    "dist",
+    "plugin.json",
+    "android",
+    "ios",
+    "README.md"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -13,7 +19,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@wefterjs/core": "link:../../Wefter/packages/core"
+    "@wefterjs/core": "^0.0.1"
   },
   "devDependencies": {
     "jsdom": "^25.0.0",

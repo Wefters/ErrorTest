@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@wefterjs/core':
-        specifier: link:../../Wefter/packages/core
-        version: link:../../Wefter/packages/core
+        specifier: ^0.0.1
+        version: 0.0.1
     devDependencies:
       jsdom:
         specifier: ^25.0.0
@@ -372,6 +372,9 @@ packages:
 
   '@vitest/utils@2.1.9':
     resolution: {integrity: sha512-v0psaMSkNJ3A2NMrUEHFRzJtDPFn+/VWZ5WxImB21T9fjucJRmS7xCS3ppEnARb9y11OAzaD+P2Ps+b+BGX5iQ==}
+
+  '@wefterjs/core@0.0.1':
+    resolution: {integrity: sha512-LBbZDFzy7yg22MkJjFYc7jOjuhYMHTdm3fQff/ZJoYdVJsBDFvghhQO1phRcPbsrsEQ7k2/a05BUbg85f9oeXw==}
 
   agent-base@7.1.4:
     resolution: {integrity: sha512-MnA+YT8fwfJPgBx3m60MNqakm30XOkyIoH1y6huTQvC0PwZG7ki8NacLBcrPbNoo8vEZy7Jpuk7+jMO+CUovTQ==}
@@ -986,6 +989,8 @@ snapshots:
       '@vitest/pretty-format': 2.1.9
       loupe: 3.2.1
       tinyrainbow: 1.2.0
+
+  '@wefterjs/core@0.0.1': {}
 
   agent-base@7.1.4: {}
 
