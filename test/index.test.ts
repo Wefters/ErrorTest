@@ -25,8 +25,7 @@ describe("ErrorTest throw methods", () => {
   it("surfaces a native-thrown error as a WefterBridgeError", async () => {
     installMockBridge({
       "error-test": (method) => {
-        if (method === "throwRuntime")
-          throw new Error("java.lang.RuntimeException: boom");
+        if (method === "throwRuntime") throw new Error("java.lang.RuntimeException: boom");
         throw new Error(`unexpected method ${method}`);
       },
     });
@@ -42,8 +41,7 @@ describe("ErrorTest throw methods", () => {
   it("surfaces a deliberate reject() call the same way", async () => {
     installMockBridge({
       "error-test": (method) => {
-        if (method === "rejectWithCode")
-          throw new Error("Deliberate reject() call");
+        if (method === "rejectWithCode") throw new Error("Deliberate reject() call");
         throw new Error(`unexpected method ${method}`);
       },
     });

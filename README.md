@@ -103,4 +103,3 @@ When a native plugin method throws:
 ## License
 
 [MIT](LICENSE) © 2026 Sandip Ghimire
-

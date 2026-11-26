@@ -2,14 +2,20 @@ package dev.wefter.bridge
 
 import org.json.JSONObject
 
+/**
+ * Fails on purpose in different ways, to check that native errors and stack traces reach JavaScript and
+ * DevTools.
+ */
 class ErrorTestPlugin(context: android.content.Context, dispatcher: BridgeDispatcher) :
         WefterPlugin(context, dispatcher) {
 
+    /** Succeeds with `{ ok: true }`. */
     @WefterMethod
     fun ping(payload: JSONObject, callback: (Result<Any>) -> Unit) {
         resolve(callback, JSONObject().put("ok", true))
     }
 
+    /** Throws a runtime exception. */
     @WefterMethod
     fun throwRuntime(payload: JSONObject, callback: (Result<Any>) -> Unit) {
         throw RuntimeException(
@@ -17,6 +23,7 @@ class ErrorTestPlugin(context: android.content.Context, dispatcher: BridgeDispat
         )
     }
 
+    /** Throws a null pointer exception. */
     @WefterMethod
     fun throwNullPointer(payload: JSONObject, callback: (Result<Any>) -> Unit) {
         val forcedNull: String? = null
@@ -24,6 +31,7 @@ class ErrorTestPlugin(context: android.content.Context, dispatcher: BridgeDispat
         resolve(callback, JSONObject().put("length", length))
     }
 
+    /** Throws an exception that wraps another one. */
     @WefterMethod
     fun throwNested(payload: JSONObject, callback: (Result<Any>) -> Unit) {
         throw RuntimeException(
@@ -32,6 +40,7 @@ class ErrorTestPlugin(context: android.content.Context, dispatcher: BridgeDispat
         )
     }
 
+    /** Rejects through the callback with a custom code instead of throwing. */
     @WefterMethod
     fun rejectWithCode(payload: JSONObject, callback: (Result<Any>) -> Unit) {
         reject(

@@ -1,12 +1,16 @@
 import Foundation
 
+/// Fails on purpose in different ways, to check that native errors and stack traces reach JavaScript and
+/// DevTools.
 final class ErrorTestPlugin: WefterPlugin {
 
+    /// Succeeds with `{ ok: true }`.
     // @WefterMethod
     func ping(payload: [String: Any], callback: @escaping (Result<Any, Error>) -> Void) throws {
         resolve(callback, data: ["ok": true])
     }
 
+    /// Throws a `RUNTIME_ERROR`.
     // @WefterMethod
     func throwRuntime(payload: [String: Any], callback: @escaping (Result<Any, Error>) -> Void) throws {
         throw WefterError(
@@ -15,6 +19,7 @@ final class ErrorTestPlugin: WefterPlugin {
         )
     }
 
+    /// Fails a forced cast of a null value, the Swift counterpart of a null pointer error.
     // @WefterMethod
     func throwNullPointer(payload: [String: Any], callback: @escaping (Result<Any, Error>) -> Void) throws {
         let payloadValue: Any = NSNull()
@@ -27,6 +32,7 @@ final class ErrorTestPlugin: WefterPlugin {
         resolve(callback, data: ["value": forced])
     }
 
+    /// Throws an error that wraps another one.
     // @WefterMethod
     func throwNested(payload: [String: Any], callback: @escaping (Result<Any, Error>) -> Void) throws {
         do {
@@ -39,6 +45,7 @@ final class ErrorTestPlugin: WefterPlugin {
         }
     }
 
+    /// Rejects through the callback with a custom code instead of throwing.
     // @WefterMethod
     func rejectWithCode(payload: [String: Any], callback: @escaping (Result<Any, Error>) -> Void) throws {
         reject(
