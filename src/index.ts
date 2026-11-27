@@ -19,10 +19,19 @@ export const ErrorTest = definePlugin<{
   throwNested: () => Promise<never>;
   /** Rejects cleanly with a custom error code. */
   rejectWithCode: () => Promise<never>;
+  /** After `delayMs`, emits `errorTest:held` with `data`, held until the page listens. */
+  holdEvent: (options: { delayMs?: number; data?: Record<string, unknown> }) => Promise<{ scheduled: true }>;
+  /** The lifecycle callbacks the plugin received, and its instance id. */
+  lifecycleLog: () => Promise<{ events: string[]; instance: number }>;
+  /** Android: opens the system settings through `launchForResult` and resolves when the user comes back. */
+  launchForResultTest: () => Promise<{ resultCode: number }>;
 }>("error-test", {
   ping: true,
   throwRuntime: true,
   throwNullPointer: true,
   throwNested: true,
   rejectWithCode: true,
+  holdEvent: true,
+  lifecycleLog: true,
+  launchForResultTest: true,
 });

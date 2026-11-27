@@ -4,6 +4,38 @@ import Foundation
 /// DevTools.
 final class ErrorTestPlugin: WefterPlugin {
 
+    /// Lifecycle callbacks this plugin received, oldest first, for checking plugin lifecycle forwarding.
+    private var lifecycle: [String] = []
+
+    override func appDidBecomeActive() { lifecycle.append("active") }
+    override func appWillResignActive() { lifecycle.append("inactive") }
+    override func appDidEnterBackground() { lifecycle.append("background") }
+    override func appWillEnterForeground() { lifecycle.append("foreground") }
+
+    /// After `delayMs`, emits `errorTest:held` with `data`, held until the page listens, to check that held
+    /// events wait for a listener.
+    // @WefterMethod
+    func holdEvent(payload: [String: Any], callback: @escaping (Result<Any, Error>) -> Void) throws {
+        let delay = (payload["delayMs"] as? NSNumber)?.doubleValue ?? 0
+        let data = payload["data"] as? [String: Any] ?? [:]
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay / 1000) { [weak self] in
+            self?.emit("errorTest:held", data, hold: true)
+        }
+        resolve(callback, data: ["scheduled": true])
+    }
+
+    /// Android only: iOS has no activity results.
+    // @WefterMethod
+    func launchForResultTest(payload: [String: Any], callback: @escaping (Result<Any, Error>) -> Void) throws {
+        reject(callback, code: "UNAVAILABLE", message: "launchForResultTest is Android only")
+    }
+
+    /// The lifecycle callbacks received so far, and this plugin instance's identity.
+    // @WefterMethod
+    func lifecycleLog(payload: [String: Any], callback: @escaping (Result<Any, Error>) -> Void) throws {
+        resolve(callback, data: ["events": lifecycle, "instance": ObjectIdentifier(self).hashValue])
+    }
+
     /// Succeeds with `{ ok: true }`.
     // @WefterMethod
     func ping(payload: [String: Any], callback: @escaping (Result<Any, Error>) -> Void) throws {

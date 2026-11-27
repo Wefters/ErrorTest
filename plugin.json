@@ -4,7 +4,7 @@
     "android": [],
     "ios": {}
   },
-  "methods": ["ping", "throwRuntime", "throwNullPointer", "throwNested", "rejectWithCode"],
+  "methods": ["ping", "throwRuntime", "throwNullPointer", "throwNested", "rejectWithCode", "holdEvent", "lifecycleLog", "launchForResultTest"],
   "hooks": [],
-  "events": []
+  "events": ["errorTest:held"]
 }
